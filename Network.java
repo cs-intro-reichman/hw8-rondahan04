@@ -34,7 +34,7 @@ public class Network {
         }
         return null;
     }
-    public int getUserCount (User user) {
+    public int getUserCount () {
         return this.userCount;
     }
 
