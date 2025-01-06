@@ -150,11 +150,12 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() { // \n is space down
-        String output ="Network:\n";
-       for (int i = 0 ; i<this.users.length;i++){
+        String output ="Network:" + "\n";
+       for (int i = 0 ; i<this.userCount -1;i++){
         if (users[i] != null)
         output = output + this.users[i].toString() +"\n";
        }
+       output = output + this.users[this.userCount -1].toString();
        return output;
     }
 }
