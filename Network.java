@@ -56,7 +56,7 @@ public class Network {
     }
     // returns true if name1 is a user in the network,otherwise false
     public boolean isUser (String name1){
-        if (name1.equals(null)) return false;
+        if (name1.equals("null")) return false;
     for (int i = 0; i<this.users.length;i++) {
         if (this.users[i]!= null && this.users[i].getName().equals(name1))
         return true;
