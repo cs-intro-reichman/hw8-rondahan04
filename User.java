@@ -43,9 +43,11 @@
 
     /** If this user follows the given name, returns true; otherwise returns false. */
     public boolean follows(String name) {
+        if (name == null || name.isEmpty()) return false;
+        String newName=name.substring(0,1).toUpperCase() + name.substring(1); // makes the name first case upper
         if (this.follows.length == 0) return false; // Checks if this User is following name.
         for (int i = 0; i<this.follows.length;i++){
-        if (this.follows[i] != null && this.follows[i].equals(name))
+        if (this.follows[i] != null && this.follows[i].equals(newName))
         return true;    
         } 
         // if he exited the loop he didnt found the name in the followers list

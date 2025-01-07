@@ -28,8 +28,10 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
+        if (name == null || name.isEmpty()) return null;
+        String newName = name.substring(0,1).toUpperCase() + name.substring(1); // makes the first letter upper
         for (int i = 0; i<users.length;i++){
-            if (users[i] != null && users[i].getName().equals(name)) //if its not null and it found a users name that match it enters
+            if (users[i] != null && users[i].getName().equals(newName)) //if its not null and it found a users name that match it enters
             return users[i];
         }
         return null;
@@ -56,7 +58,7 @@ public class Network {
     }
     // returns true if name1 is a user in the network,otherwise false
     public boolean isUser (String name1){
-        if (name1.equals("null")) return false;
+       // if (name1.equals("null")) return false;
     for (int i = 0; i<this.users.length;i++) {
         if (this.users[i]!= null && this.users[i].getName().equals(name1))
         return true;
@@ -67,9 +69,9 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
+        if (name1 == null || name2 == null) return false; // if any of the users is a null user
         if (name1.equals(name2)) return false;// same user 
-        if (!isUser(name1) || !isUser(name1)) // if one of them isnt a user in the network
-        return false;
+        if (!isUser(name1) || !isUser(name2)) return false; // if one of them isnt a user in the network
         for (int i = 0 ; i < this.users.length; i++){
             if (this.users[i] != null && this.users[i].getName().equals(name1)){
                 if (!this.users[i].follows(name2)){ // if he doesnt follows name 2 make him follow!
@@ -126,14 +128,24 @@ public class Network {
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
         int maxFollowers = 0;
-        if (users.length == 0)
-        return null;
-        int mostPopIndex = 0;
+        if (this.userCount == 0) return null; // empty network
+        if (this.userCount == 1) return users[0].getName();
+        int  mostPopIndex = 0;
         for (int i = 0; i<this.users.length;i++){
-            if (this.users[i]!= null && maxFollowers < this.users[i].getfCount()){
-                maxFollowers = this.users[i].getfCount();
+            if (this.users[i] != null){
+                String userName=this.users[i].getName(); // current user Name
+                int tempMax = 0;
+                for (int j=0;j<this.users.length;j++){ // checks which of the users follows the user[i]
+                    if (j == i) continue; // if im on the same user 
+                if (users[j] != null){ // if the use exists go ahead
+                if (users[j].follows(userName)) tempMax++; 
+                }
+                if (tempMax > maxFollowers){
+                maxFollowers = tempMax;
                 mostPopIndex = i;
             }
+            }
+             }   
         }
         return users[mostPopIndex].getName();
     }
